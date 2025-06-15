@@ -1,0 +1,164 @@
+CREDIT CARD FRAUD DETECTION - FINAL MODEL METRICS
+================================================================
+
+PROJECT: Conquering Class Imbalance: Strategic Sampling for High-Recall Credit Card Fraud Detection
+DATE: June 2025
+AUTHOR: Shayma Remy
+
+FINAL MODEL SELECTION
+--------------------
+Selected Model: Random Forest Classifier
+Reason: Best balance of recall (73.34%) and precision (85.02%) with strong ROC AUC (0.9176)
+
+DATASET OVERVIEW
+---------------
+Total Records: 590,540 transactions + 144,233 identity records (merged)
+Final Dataset Size: 590,540 rows × 434 columns
+Class Distribution: 
+  - Fraudulent: 20,663 (3.5%)
+  - Legitimate: 569,877 (96.5%)
+Memory Usage: ~1.8 GB (optimized from 1.9 GB)
+
+TRAINING STRATEGY
+----------------
+Approach: 2:1 Undersampled + SMOTE
+Training Data Size: 61,989 rows (33.3% fraud)
+  - All 20,663 fraud cases retained
+  - 41,326 legitimate cases randomly sampled
+  - ~528,000 legitimate cases discarded
+
+Train/Test Split: 80/20
+  - Training: 49,591 rows → 66,122 rows after SMOTE (50/50 balance)
+  - Testing: 12,398 rows (33.3% fraud, untouched)
+
+MODEL HYPERPARAMETERS
+--------------------
+Algorithm: RandomForestClassifier
+Key Parameters:
+  - n_estimators: 100
+  - max_depth: None (unlimited)
+  - min_samples_split: 5
+  - random_state: 42
+  - n_jobs: -1 (parallel processing)
+
+Recommended Production Settings:
+  - n_estimators: 300 (enhanced stability)
+  - max_depth: 15 (controlled complexity)
+  - min_samples_split: 5
+
+FEATURE ENGINEERING
+------------------
+Total Features: 423 predictor columns
+Feature Types:
+  - Numeric: Imputed with median, scaled with RobustScaler
+  - Categorical: Imputed with "Unknown"
+    - Ordinal: Label encoded
+    - Nominal: One-hot encoded
+
+Key Temporal Features:
+  - Hour, day, weekday, month, year (extracted from TransactionDT)
+  - Distance metrics: dist1, dist2
+  - Time deltas: D1-D15
+
+PERFORMANCE METRICS (Test Set: 12,398 rows)
+==========================================
+
+CONFUSION MATRIX
+---------------
+                Predicted
+Actual      Legitimate  Fraudulent
+Legitimate      7,731        534
+Fraudulent      1,102      3,031
+
+CLASSIFICATION METRICS
+---------------------
+Accuracy: 86.80%
+Precision (Fraud): 85.02%
+Recall (Fraud): 73.34%
+F1-Score (Fraud): 78.75%
+ROC AUC: 0.9176
+
+False Positives: 534 (6.46% of legitimate transactions)
+False Negatives: 1,102 (26.66% of fraudulent transactions)
+
+THRESHOLD OPTIMIZATION
+---------------------
+Default Threshold: 0.50
+Optimized Threshold: 0.69
+Impact of Optimization:
+  - Maintains ~73% recall
+  - Reduces false positives by ~85%
+  - Daily false positives (100K transactions): <1,000
+
+BUSINESS IMPACT ANALYSIS
+------------------------
+Cost Assumptions:
+  - Average fraud loss: $120 per transaction
+  - False positive cost: $5 + potential churn ($250 × 5% rate)
+
+Annual Projections:
+  - Baseline costs: $141,585
+  - Optimized model costs: $37,400
+  - Estimated annual savings: $104,185
+
+MODEL COMPARISON (All on same test set)
+======================================
+Model           ROC AUC  Accuracy  Precision  Recall   F1     FP    FN
+Logistic Reg    0.4990   33.45%    33.29%     99.27%   49.86% 8,182  28
+Random Forest   0.9176   86.80%    85.02%     73.34%   78.75%  534   1,102
+XGBoost         0.9137   86.42%    85.48%     71.38%   77.80%  501   1,183
+LightGBM        0.9118   86.47%     85.99%    70.97%   77.76%  478   1,201
+
+CRITICAL FRAUD INDICATORS IDENTIFIED
+===================================
+Temporal Patterns:
+  - Peak fraud hours: 4 PM - 11 PM (>30% of fraud)
+  - High-risk day: Friday (18% of fraud vs 14% of transactions)
+
+Transaction Characteristics:
+  - Amount: Most fraud <$200 (testing strategy)
+  - Networks: Discover and MasterCard show elevated rates
+  - Product codes: "W" and "C" overrepresented in fraud
+
+Behavioral Indicators:
+  - Device: 55% fraud from mobile devices
+  - Email: Disposable domains 2.5x higher fraud rate
+  - Identity: Missing features strong fraud indicators
+  - Distance: Anomalous metrics suggest location spoofing
+
+DEPLOYMENT RECOMMENDATIONS
+==========================
+Real-time Scoring: Probability threshold = 0.69
+Three-Tier Review Workflow:
+  - Tier 1 (0.69-0.80): Hourly batch review
+  - Tier 2 (0.80-0.90): Hold + OTP verification
+  - Tier 3 (≥0.90): Immediate decline + investigation
+
+Retraining Schedule: Monthly with 60-day rolling window
+Monitoring: Real-time dashboard tracking precision, recall, feature drift
+
+LIMITATIONS & CONSIDERATIONS
+===========================
+- Information loss from undersampling (~528K legitimate transactions)
+- SMOTE bias may not reflect novel fraud schemes
+- Requires continuous monitoring for feature drift
+- Limited network analysis (individual transaction focus)
+- Anonymized "V" features reduce interpretability
+
+TECHNICAL ENVIRONMENT
+====================
+Platform: Google Colab (12.7 GB RAM)
+Libraries: scikit-learn, pandas, numpy, matplotlib, seaborn
+Training Time: ~90% reduction vs full dataset approach
+Model Size: Suitable for real-time deployment
+
+VALIDATION STATUS
+================
+✓ Tested on holdout set (12,398 rows)
+✓ Threshold optimized for operational feasibility  
+✓ Business impact quantified
+✓ Deployment strategy defined
+✓ Monitoring framework established
+
+================================================================
+END OF MODEL METRICS SUMMARY
