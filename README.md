@@ -31,6 +31,7 @@ Credit card fraud is a high-impact, low-frequency event—just 3.5% of transacti
 | `5_Modeling_and_Threshold_Tuning.ipynb` | Model training, evaluation, and threshold tuning |
 | `model_metrics.txt` | Summary of final model performance and hyperparameters |
 | `Capstone_Final_Report.pdf` | Full project report with methodology, results, and recommendations |
+| `Capstone_Final_Slides` | 20-slide presentation summarizing key results, delivered during mentor session |
 
 ---
 
@@ -69,6 +70,23 @@ Credit card fraud is a high-impact, low-frequency event—just 3.5% of transacti
 - Explore time-based or behavioral features (e.g., IP-to-location matching, login frequency)
 - Evaluate ensemble methods like stacking or voting classifiers
 - Improve runtime and scalability with LightGBM or other gradient boosting methods
+
+---
+
+## 🖥️ Capstone Presentation
+
+A 20-minute slide presentation summarizing this project has been completed and presented to the mentor.
+
+- 📁 File Name: `Capstone_Final_Slides`
+- 🗓️ Status: ✅ Presented and feedback incorporated
+- 🎯 Content Covered:
+  - Project overview and business impact
+  - Dataset characteristics and class imbalance challenge
+  - Feature engineering and SMOTE
+  - Model selection and evaluation
+  - Final recommendations and insights
+  - Limitations and next steps
+
 
 ---
 
