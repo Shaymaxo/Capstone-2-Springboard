@@ -31,7 +31,7 @@ Credit card fraud is a high-impact, low-frequency event—just 3.5% of transacti
 | `5_Modeling_and_Threshold_Tuning.ipynb` | Model training, evaluation, and threshold tuning |
 | `model_metrics.txt` | Summary of final model performance and hyperparameters |
 | `Capstone_Final_Report.pdf` | Full project report with methodology, results, and recommendations |
-| `Capstone_Final_Slides` | 20-slide presentation summarizing key results, delivered during mentor session |
+| `Capstone_Final_Slides.pdf` | 20-slide presentation summarizing key results, delivered during mentor session |
 
 ---
 
