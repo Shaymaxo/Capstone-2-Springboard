@@ -86,6 +86,6 @@ Credit card fraud is a high-impact, low-frequency event—just 3.5% of transacti
 **Shayma Remy**  
 *Data Scientist | Financial Crimes Analyst*  
 [LinkedIn](https://www.linkedin.com/in/shayma-remy)  
-[Email](shayma.remy@gmail.com)
+[Email](mailto:shayma.remy@gmail.com)
 
 ---
